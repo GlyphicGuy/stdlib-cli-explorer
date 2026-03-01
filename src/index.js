@@ -2,13 +2,12 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const asciichart = require('asciichart');
 
-// MODULAR IMPORTS
 const linspace = require('@stdlib/array-linspace');
 const erf = require('@stdlib/math-base-special-erf');
 const gamma = require('@stdlib/math-base-special-gamma');
 const sin = require('@stdlib/math-base-special-sin');
 
-const PLOT_CONFIGS = {
+const plotConfig = {
     'Error Function (erf)': {
         fn: erf,
         defaultRange: [-3, 3],
@@ -23,43 +22,47 @@ const PLOT_CONFIGS = {
     },
     'Sine Wave (sin)': {
         fn: sin,
-        defaultRange: [0, 6.28], // One full period (2*PI)
+        defaultRange: [0, 6.28],
         color: asciichart.blue,
         desc: 'Standard trigonometric oscillation.'
     }
 };
 
+function clearScreen(){
+    process.stdout.write('\u001b[2J\u001b[0;0H');
+}
+
 function renderChart(name, range) {
-    const config = PLOT_CONFIGS[name];
+    const config = plotConfig[name];
     const termWidth = process.stdout.columns || 80;
-    const numPoints = termWidth - 15; 
-    
-    // Use the custom range provided by the user
+    const numPoints = termWidth - 15;
+
     const xValues = linspace(range[0], range[1], numPoints);
     const yValues = [];
 
     for (let i = 0; i < xValues.length; i++) {
         let y = config.fn(xValues[i]);
-        if (isNaN(y) || !isFinite(y)) y = 0;
-        // Smart scaling for Gamma to prevent "flat-lining" the rest of the plot
+        if (isNaN(y) || !isFinite(y)) y = 0; //to avoid flat lines
+
         if (name.includes('Gamma')) y = Math.min(y, 20);
         yValues.push(y);
     }
 
-    process.stdout.write('\u001b[2J\u001b[0;0H'); 
+    clearScreen();
+
     console.log(chalk.bold.bgWhite.black(`  STDLIB EXPLORER: ${name.toUpperCase()}  `));
     console.log(chalk.cyan(`  ${config.desc}\n`));
-    
-    console.log(asciichart.plot(yValues, { 
-        height: 14, 
-        colors: [config.color] 
+
+    console.log(asciichart.plot(yValues, {
+        height: 14,
+        colors: [config.color]
     }));
-    
+
     console.log(chalk.yellow(`\n  X-Axis: ${range[0]} to ${range[1]} | Samples: ${numPoints}`));
 }
 
 async function mainMenu() {
-    process.stdout.write('\u001b[2J\u001b[0;0H'); 
+    clearScreen();
     console.log(chalk.bold.blue('--- stdlib Special Math Functions Visualizer --- \n'));
 
     const { choice } = await inquirer.prompt([
@@ -67,7 +70,7 @@ async function mainMenu() {
             type: 'list',
             name: 'choice',
             message: 'Select a function:',
-            choices: [...Object.keys(PLOT_CONFIGS), new inquirer.Separator(), 'Exit']
+            choices: [...Object.keys(plotConfig), new inquirer.Separator(), 'Exit']
         }
     ]);
 
@@ -76,9 +79,8 @@ async function mainMenu() {
         process.exit();
     }
 
-    const config = PLOT_CONFIGS[choice];
+    const config = plotConfig[choice];
 
-    // NEW: Interactive Range Selection
     const { useDefault } = await inquirer.prompt([{
         type: 'confirm',
         name: 'useDefault',
@@ -120,10 +122,10 @@ async function mainMenu() {
     ]);
 
     if (back) await mainMenu();
-    else{
-     console.log(chalk.yellow('\nExiting...\nThank you!'))
-     process.exit();
-    }    
+    else {
+        console.log(chalk.yellow('\nExiting...\nThank you!'))
+        process.exit();
+    }
 }
 
 mainMenu().catch(err => console.error(err));

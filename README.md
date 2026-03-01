@@ -6,12 +6,22 @@ An interactive CLI tool for visualizing specialized mathematical functions provi
 
 ## Description
 
-This project provides a responsive terminal-based environment to explore complex mathematical functions like the **Gamma Function** and the **Error Function (erf)** (I intend to add more later). It allows users to:
+This project provides a responsive terminal-based environment to explore complex mathematical functions like the **Gamma Function** and the **Error Function (erf)** *(I intend to add more later)*. It allows users to:
 
-* **Select** from a list of high-precision mathematical functions.
-* **Input** custom X-axis ranges with built-in validation.
-* **Visualize** data using a responsive ASCII line plot that adapts to the terminal's width and height.
-* **Navigate** through a persistent, interactive menu of functions.
+- Select from a list of high-precision mathematical functions.
+- Input custom X-axis ranges with built-in validation.
+- Visualize data using a responsive ASCII line plot that adapts to the terminal's width and height.
+- Navigate through a persistent, interactive menu of functions.
+
+## Visuals
+*Menu*
+![alt text](public/menu.png)
+
+*Plot examples*
+
+![alt text](public/sinExp.png)
+
+![alt text](public/gammaExp.png)
 
 ## Features
 
@@ -39,16 +49,14 @@ cd stdlib-cli-explorer
 
 ```
 
-
 2. Install the dependencies
 ```bash
 npm install
-
 ```
 
 ## Usage
 
-To start the interactive explorer, run the following command from the root directory:
+Run the following command from the root directory:
 
 ```bash
 npm start
