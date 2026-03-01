@@ -1,14 +1,14 @@
 # stdlib CLI Explorer
 
-An interactive CLI tool for visualizing specialized mathematical functions provided by the `stdlib` library.
+An interactive CLI tool for visualizing specialized math functions provided by the `stdlib` library.
 
 *Why CLI based?* - because I don't like leaving my terminal.
 
 ## Description
 
-This project provides a responsive terminal-based environment to explore complex mathematical functions like the **Gamma Function** and the **Error Function (erf)** *(I intend to add more later)*. It allows users to:
+This project provides a responsive terminal-based environment to explore complex math functions like the **Gamma Function** and the **Error Function (erf)** *(I intend to add more later)*. It allows users to:
 
-- Select from a list of high-precision mathematical functions.
+- Select from a list of high-precision math functions.
 - Input custom X-axis ranges with built-in validation.
 - Visualize data using a responsive ASCII line plot that adapts to the terminal's width and height.
 - Navigate through a persistent, interactive menu of functions.
