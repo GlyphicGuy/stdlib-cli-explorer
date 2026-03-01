@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "dependencies": {
+        "@stdlib/stdlib": "^0.3.2",
+        "asciichart": "^1.5.25",
+        "chalk": "^4.1.2",
+        "cli-chart": "^0.3.1",
+        "inquirer": "^8.2.7"
+    }
+}
